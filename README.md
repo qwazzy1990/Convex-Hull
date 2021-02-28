@@ -20,6 +20,10 @@ Accepted input files:
    
 To run: Type make which produces an executable called hull
 
+  To run with printing the HULL:
+  ./hull 1 "fileName.txt"
+  
+  To run without printing the HULL:
   ./hull "fileName.txt"
 
 To clean:
