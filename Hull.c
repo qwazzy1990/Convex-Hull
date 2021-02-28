@@ -81,41 +81,9 @@ float lineDistance(Point p, Point q, Point r);
  * */
 int findSide(Point p, Point q, Point r);
 
-int findSideTwo(Point p, Point q, Point r);
 
 
-int findSideTwo(Point p, Point q, Point r)
-{
-	//calculate the slope of the line formed by 
-	//p and q
-	float m = (q.y - p.y)/(q.x - p.x);
-	//printf("m is %.4f\n", m);
 
-	//calculate the 'b' value 
-	//for the formula, y = mx+b 
-	//with the line formed by p,q
-	float b = p.y - (m*p.x);
-	//printf("b is %.4f\n", b);
-	//use the value 
-	//of r's x coordinate 
-	//to find the y value of the line formed by pq 
-	//at that coordinate
-	float fOfR = m*(r.x) + b;
-	//printf("fOfR is %.4f\n", fOfR);
-
-	//to get the distance from 'r' and the line formed 
-	//by pq, we know that fOfR was calucltaed using 
-	//r's x value. Therefore, take the absolute value 
-	//of the distance between r's y value and fOfR
-
-	float result = r.y - fOfR;
-	//if r is above pq
-	if(result > 0)return 1;
-	//else if r is below pq
-	else if(result < 0)return -1;
-	//else colinear
-	else return 0;
-}
 /**
  * Adds all points in the set
  * that belong in the Hull. 
@@ -449,7 +417,33 @@ void printSet(PointSet* set)
 int main(int argc, char* argv[])
 {
 
-	PointSet* points = readFile(argv[1]);
+	char* fileName = NULL;
+	bool print = false;
+	//if the user enters "1" to print
+	if(argc == 2)
+	{
+		fileName = argv[1];
+	}
+	else if(argc == 3) 
+	{
+		fileName = argv[2];
+		print = true;
+	}
+	else{
+		printf("You need to enter a file\n");
+		exit(0);
+	}
+
+	
+
+	PointSet* points = readFile(fileName);
+	if(points == NULL)
+	{
+		printf("Failed to open the file\n");
+		exit(0);
+	}
+	
+	
 	int N = points->numPoints;
 	qsort(points->points, points->numPoints, sizeof(Point**), &comparePoints);
 	PointSet* hull = newPointSet();
@@ -457,21 +451,12 @@ int main(int argc, char* argv[])
 	qsort(points->points, points->numPoints, sizeof(Point*), &comparePoints);
 	quickHull(hull, points, N);
 	printf("%d\n", hull->numPoints);
+	if(print == true)
+	{
+		printSet(hull);
+	}
 	freePointSet(points);
 	freePointSet(hull);
-	//PointSet* set = newPointSet();*/
 
-	 /*Point* p = calloc(1, sizeof(Point));
-	 //addPoint(set, p);
-	Point* q = calloc(1, sizeof(Point));
-	Point* r = calloc(1, sizeof(Point));
-
-	 p->x = 3;
-	 p->y = 11;
- 	q->x = 6;
- 	q->y = 7;
- 	r->x = 5;
- 	r->y = 7;
- 	printf("%d\n", findSideTwo(*p, *q, *r));*/
  	return 0;
 }
