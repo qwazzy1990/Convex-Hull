@@ -459,19 +459,5 @@ int main(int argc, char* argv[])
 	printf("%d\n", hull->numPoints);
 	freePointSet(points);
 	freePointSet(hull);
-	//PointSet* set = newPointSet();*/
-
-	 /*Point* p = calloc(1, sizeof(Point));
-	 //addPoint(set, p);
-	Point* q = calloc(1, sizeof(Point));
-	Point* r = calloc(1, sizeof(Point));
-
-	 p->x = 3;
-	 p->y = 11;
- 	q->x = 6;
- 	q->y = 7;
- 	r->x = 5;
- 	r->y = 7;
- 	printf("%d\n", findSideTwo(*p, *q, *r));*/
  	return 0;
 }
